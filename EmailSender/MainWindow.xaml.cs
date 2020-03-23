@@ -1,7 +1,11 @@
-﻿using System;
+﻿using EmailSender.Interfaces;
+using EmailSender.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,8 +27,6 @@ namespace EmailSender
         public MainWindow()
         {
             InitializeComponent();
-
-
         }
     }
 }
