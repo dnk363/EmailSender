@@ -22,7 +22,7 @@ namespace EmailSender.Services
             using (var client = new SmtpClient())
             {
                 await client.ConnectAsync(emailSettings.Host, emailSettings.Port, emailSettings.EnableSSL);
-                await client.AuthenticateAsync(emailSettings.UserName, emailSettings.UserPassword);
+                await client.AuthenticateAsync(emailSettings.UserEmail, emailSettings.UserPassword);
                 await client.SendAsync(emailMessage);
 
                 await client.DisconnectAsync(true);

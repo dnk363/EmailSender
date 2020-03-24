@@ -12,5 +12,7 @@ namespace EmailSender.Models
         public string RecieverEmail { get; set; }
         public string MessageSubject { get; set; }
         public string MessageBody { get; set; }
+        public string SiteUrl { get; set; }
+        public string TableClassID { get; set; }
     }
 }
