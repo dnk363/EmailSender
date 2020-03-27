@@ -9,6 +9,7 @@
     <Grid>
         <Menu x:Name="gridMenu" Height="40" VerticalAlignment="Top">
             <Button x:Name="startButton" Width="100" Height="25" Margin="5,5,0,0" Click="StartButton_Click">Start</Button>
+            <Button x:Name="stopButton" Width="100" Height="25" Margin="5,5,0,0" Click="StopButton_Click">Stop</Button>
         </Menu>
         <DataGrid x:Name="gridEmailSender" Margin="0,40,0,0" AutoGenerateColumns="False">
             <DataGrid.Columns>
@@ -22,8 +23,8 @@
                 <DataGridTextColumn Binding="{Binding Path = RecieverEmail}" Header="ToEmail" Width="1*"/>
                 <DataGridTextColumn Binding="{Binding Path = MessageSubject}" Header="Subject" Width="1*"/>
                 <DataGridTextColumn Binding="{Binding Path = MessageBody}" Header="Message" Width="1*"/>
-                <DataGridTextColumn Binding="{Binding Path = SiteUrl}" Header="SiteUrl" Width="1*"/>
-                <DataGridTextColumn Binding="{Binding Path = TableClassID}" Header="TableClassID" Width="1*"/>
+                <!--<DataGridTextColumn Binding="{Binding Path = SiteUrl}" Header="SiteUrl" Width="1*"/>
+                <DataGridTextColumn Binding="{Binding Path = TableClassID}" Header="TableClassID" Width="1*"/> -->
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

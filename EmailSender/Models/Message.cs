@@ -1,4 +1,5 @@
 ﻿using EmailSender.Interfaces;
+using EmailSender.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +13,5 @@ namespace EmailSender.Models
         public string RecieverEmail { get; set; }
         public string MessageSubject { get; set; }
         public string MessageBody { get; set; }
-        public string SiteUrl { get; set; }
-        public string TableClassID { get; set; }
     }
 }

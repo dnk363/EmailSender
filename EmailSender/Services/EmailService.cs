@@ -24,7 +24,7 @@ namespace EmailSender.Services
                 await client.ConnectAsync(emailSettings.Host, emailSettings.Port, emailSettings.EnableSSL);
                 await client.AuthenticateAsync(emailSettings.UserEmail, emailSettings.UserPassword);
                 await client.SendAsync(emailMessage);
-
+                
                 await client.DisconnectAsync(true);
             }
         }
