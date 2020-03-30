@@ -5,6 +5,7 @@ namespace EmailSender.ViewModels
 {
     class ViewSettings : IEmailSettings, IMessage, INotifyPropertyChanged
     {
+        private string _name;
         private bool _enableSSL;
         private string _host;
         private int _port;
@@ -15,8 +16,20 @@ namespace EmailSender.ViewModels
         private string _recieverEmail;
         private string _messageSubject;
         private string _messageBody;
-        //private string _siteUrl;
-        //private string _tableClassID;
+        private string _siteUrl;
+        private string _tableClassID;
+
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (_name == value)
+                    return;
+                _name = value;
+                OnPropertyChanged("Name");
+            }
+        }
 
         public bool EnableSSL
         {
@@ -129,7 +142,7 @@ namespace EmailSender.ViewModels
                 OnPropertyChanged("MessageBody");
             }
         }
-        /*public string SiteUrl
+        public string SiteUrl
         {
             get { return _siteUrl; }
             set
@@ -150,7 +163,7 @@ namespace EmailSender.ViewModels
                 _tableClassID = value;
                 OnPropertyChanged("TableClassID");
             }
-        }*/
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

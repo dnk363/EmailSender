@@ -55,6 +55,7 @@ namespace EmailSender
 
             
             gridEmailSender.ItemsSource = _dataSettingsList;
+            itemEmailSender.DataContext = _dataSettingsList;
             _dataSettingsList.ListChanged += _dataSettingsList_ListChanged;
         }
 
@@ -120,6 +121,11 @@ namespace EmailSender
             }
             stopButton.IsEnabled = false;
             startButton.IsEnabled = true;
+        }
+
+        private void gridEmailSender_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            itemEmailSender.DataContext = gridEmailSender.CurrentItem;
         }
     }
 }
