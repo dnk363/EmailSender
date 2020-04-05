@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace EmailSender.ViewModels
 {
-    class ViewSettings : IEmailSettings, IMessage, INotifyPropertyChanged
+    class ViewSettings : IEmailSettings, IMessage, ISiteSettings, INotifyPropertyChanged
     {
         private string _name;
         private bool _enableSSL;
@@ -18,6 +18,8 @@ namespace EmailSender.ViewModels
         private string _messageBody;
         private string _siteUrl;
         private string _tableClassID;
+        private string _compareValue;
+        private string _timeStartSettings;
 
         public string Name
         {
@@ -162,6 +164,30 @@ namespace EmailSender.ViewModels
                     return;
                 _tableClassID = value;
                 OnPropertyChanged("TableClassID");
+            }
+        }
+
+        public string CompareValue
+        {
+            get { return _compareValue; }
+            set
+            {
+                if (_compareValue == value)
+                    return;
+                _compareValue = value;
+                OnPropertyChanged("CompareValue");
+            }
+        }
+
+        public string TimeStartSettings
+        {
+            get { return _timeStartSettings; }
+            set
+            {
+                if (_timeStartSettings == value)
+                    return;
+                _timeStartSettings = value;
+                OnPropertyChanged("TimeStartSettings");
             }
         }
 

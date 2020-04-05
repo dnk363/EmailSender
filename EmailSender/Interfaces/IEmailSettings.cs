@@ -15,5 +15,7 @@ namespace EmailSender.Interfaces
         public string UserEmail { get; set; }
 
         public string UserPassword { get; set; }
+
+        public string TimeStartSettings { get; set; }
     }
 }

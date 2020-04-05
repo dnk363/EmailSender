@@ -1,23 +1,23 @@
 ﻿using EmailSender.Interfaces;
-using EmailSender.Models;
 using Quartz;
 using Quartz.Impl;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace EmailSender.Services
 {
     class ShedulerService
     {
-        private EmailService _emailService;
+        private IEmailService _emailService;
         private IEmailSettings _emailSettings;
+        private ISiteSettings _siteSettings;
         private IMessage _message;
         private IScheduler _scheduler;
 
-        public ShedulerService(EmailService emailService, IEmailSettings emailSettings, IMessage message)
+        public ShedulerService(IEmailService emailService, IEmailSettings emailSettings, IMessage message, ISiteSettings siteSettings)
         {
             _emailService = emailService;
             _emailSettings = emailSettings;
+            _siteSettings = siteSettings;
             _message = message;
         }
 
@@ -35,13 +35,11 @@ namespace EmailSender.Services
 
             job.JobDataMap["emailService"] = _emailService;
             job.JobDataMap["emailSettings"] = _emailSettings;
+            job.JobDataMap["siteSettings"] = _siteSettings;
             job.JobDataMap["message"] = _message;
 
             ITrigger trigger = TriggerBuilder.Create()
-                .StartNow()
-                .WithSimpleSchedule(x => x
-                    .WithIntervalInMinutes(1)
-                    .RepeatForever())
+                .WithCronSchedule(_emailSettings.TimeStartSettings)
                 .Build();
 
             await _scheduler.ScheduleJob(job, trigger);
@@ -56,6 +54,7 @@ namespace EmailSender.Services
         {
             private IEmailSettings _emailSettings;
             private IMessage _message;
+            private ISiteSettings _siteSettings;
 
             public async Task Execute(IJobExecutionContext context)
             {
@@ -63,7 +62,8 @@ namespace EmailSender.Services
                 EmailService emailService = (EmailService)dataMap["emailService"];
                 _emailSettings = (IEmailSettings)dataMap["emailSettings"];
                 _message = (IMessage)dataMap["message"];
-                await emailService.SendEmailAsync(_emailSettings, _message);
+                _siteSettings = (ISiteSettings)dataMap["siteSettings"];
+                await emailService.SendEmailAsync(_emailSettings, _message, _siteSettings);
             }
         }
     }

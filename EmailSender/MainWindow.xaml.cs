@@ -1,30 +1,14 @@
-﻿using EmailSender.Interfaces;
-using EmailSender.ViewModels;
+﻿using EmailSender.ViewModels;
 using EmailSender.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using EmailSender.Models;
 
 namespace EmailSender
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private readonly string PATH = $"{Environment.CurrentDirectory}\\appSettings.json";
@@ -57,6 +41,8 @@ namespace EmailSender
             gridEmailSender.ItemsSource = _dataSettingsList;
             itemEmailSender.DataContext = _dataSettingsList;
             _dataSettingsList.ListChanged += _dataSettingsList_ListChanged;
+
+            FormMessageService formMessageService = new FormMessageService();
         }
 
         private void _dataSettingsList_ListChanged(object sender, ListChangedEventArgs e)
@@ -90,7 +76,8 @@ namespace EmailSender
                     Port = settingsList.Port,
                     UserEmail = settingsList.UserEmail,
                     UserName = settingsList.UserEmail,
-                    UserPassword = settingsList.UserPassword
+                    UserPassword = settingsList.UserPassword,
+                    TimeStartSettings = settingsList.TimeStartSettings
                 };
 
                 Message message = new Message()
@@ -102,7 +89,15 @@ namespace EmailSender
                     SenderName = settingsList.SenderName
                 };
 
-                ShedulerService shedulerService = new ShedulerService(emailService, emailSettings, message);
+                SiteSettings siteSettings = new SiteSettings()
+                {
+                    SiteUrl = settingsList.SiteUrl,
+                    TableClassID = settingsList.TableClassID,
+                    CompareValue = settingsList.CompareValue,
+                    
+                };
+
+                ShedulerService shedulerService = new ShedulerService(emailService, emailSettings, message, siteSettings);
 
                 shedulerService.StartNowAsync();
 

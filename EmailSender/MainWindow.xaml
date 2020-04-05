@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmailSender"
         mc:Ignorable="d"
-        Title="EmailSender" Height="600" Width="796" Loaded="Window_Loaded">
+        Title="EmailSender" Height="610" Width="750" Loaded="Window_Loaded">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="14" />
@@ -30,23 +30,11 @@
         <DataGrid Grid.Column="0" x:Name="gridEmailSender" Margin="0,40,0,0" AutoGenerateColumns="False" SelectedCellsChanged="gridEmailSender_SelectedCellsChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path = Name}" Header="Name" Width="1*"/>
-                <!--<DataGridTextColumn Binding="{Binding Path = UserEmail}" Header="Login" Width="1*"/>
-                <DataGridTextColumn Binding="{Binding Path = UserPassword}" Header="Password" Width="1*"/>
-                <DataGridTextColumn Binding="{Binding Path = Host}" Header="Host" Width="1*"/>
-                <DataGridTextColumn Binding="{Binding Path = Port}" Header="Port" Width="1*"/>
-                <DataGridCheckBoxColumn Binding="{Binding Path = EnableSSL, UpdateSourceTrigger=PropertyChanged}" Header="SSL" Width="1*"/>
-                <DataGridTextColumn Binding="{Binding Path = SenderName}" Header="Name" Width="1*"/>
-                <DataGridTextColumn Binding="{Binding Path = SenderEmail}" Header="FromEmail" Width="1*"/>
-                <DataGridTextColumn Binding="{Binding Path = RecieverEmail}" Header="ToEmail" Width="1*"/>
-                <DataGridTextColumn Binding="{Binding Path = MessageSubject}" Header="Subject" Width="1*"/>
-                <DataGridTextColumn Binding="{Binding Path = MessageBody}" Header="Message" Width="1*"/>
-                <DataGridTextColumn Binding="{Binding Path = SiteUrl}" Header="SiteUrl" Width="1*"/>
-                <DataGridTextColumn Binding="{Binding Path = TableClassID}" Header="TableClassID" Width="1*"/>-->
             </DataGrid.Columns>
         </DataGrid>
 
         <StackPanel Grid.Column="1" x:Name="itemEmailSender">
-            <TextBlock Text="Выбранный элемент"  />
+            <TextBlock Text="Selected item"  />
             <TextBlock Text="Login" />
             <TextBox Text="{Binding UserEmail, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Password" />
@@ -55,22 +43,26 @@
             <TextBox Text="{Binding Host, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Port" />
             <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock Text="EnableSSL" />
+            <TextBlock Text="Enable SSL" />
             <CheckBox IsChecked="{Binding EnableSSL, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Text="Start settings(Unix time format)" />
+            <TextBox Text="{Binding TimeStartSettings, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="SenderName" />
             <TextBox Text="{Binding SenderName, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock Text="SenderEmail" />
+            <TextBlock Text="Sender Email" />
             <TextBox Text="{Binding SenderEmail, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock Text="RecieverEmail" />
+            <TextBlock Text="Reciever Email" />
             <TextBox Text="{Binding RecieverEmail, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock Text="MessageSubject" />
+            <TextBlock Text="Message Subject" />
             <TextBox Text="{Binding MessageSubject, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock Text="MessageBody" />
+            <TextBlock Text="Message head" />
             <TextBox Text="{Binding MessageBody, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock Text="SiteUrl" />
+            <TextBlock Text="Site Url" />
             <TextBox Text="{Binding SiteUrl, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock Text="TableClassID" />
+            <TextBlock Text="ClassID from table" />
             <TextBox Text="{Binding TableClassID, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Text="Value to compare" />
+            <TextBox Text="{Binding CompareValue, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
     </Grid>
 </Window>
