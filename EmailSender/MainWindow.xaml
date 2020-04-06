@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmailSender"
         mc:Ignorable="d"
-        Title="EmailSender" Height="610" Width="750" Loaded="Window_Loaded">
+        Title="EmailSender" Height="700" Width="750" Loaded="Window_Loaded">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="14" />
@@ -61,8 +61,12 @@
             <TextBox Text="{Binding SiteUrl, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="ClassID from table" />
             <TextBox Text="{Binding TableClassID, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Text="Column to compare" />
+            <TextBox Text="{Binding ColumnToCompare, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Value to compare" />
             <TextBox Text="{Binding CompareValue, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Text="Column is not empty" />
+            <TextBox Text="{Binding NotNullColumn, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
     </Grid>
 </Window>

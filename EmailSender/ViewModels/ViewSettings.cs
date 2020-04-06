@@ -18,8 +18,10 @@ namespace EmailSender.ViewModels
         private string _messageBody;
         private string _siteUrl;
         private string _tableClassID;
+        private string _columnToCompare;
         private string _compareValue;
         private string _timeStartSettings;
+        private string _notNullColumn;
 
         public string Name
         {
@@ -188,6 +190,30 @@ namespace EmailSender.ViewModels
                     return;
                 _timeStartSettings = value;
                 OnPropertyChanged("TimeStartSettings");
+            }
+        }
+
+        public string NotNullColumn
+        {
+            get { return _notNullColumn; }
+            set
+            {
+                if (_notNullColumn == value)
+                    return;
+                _notNullColumn = value;
+                OnPropertyChanged("NotNullColumn");
+            }
+        }
+
+        public string ColumnToCompare
+        {
+            get { return _columnToCompare; }
+            set
+            {
+                if (_columnToCompare == value)
+                    return;
+                _columnToCompare = value;
+                OnPropertyChanged("ColumnToCompare");
             }
         }
 

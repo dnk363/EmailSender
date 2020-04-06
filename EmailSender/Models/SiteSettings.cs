@@ -6,6 +6,8 @@ namespace EmailSender.Models
     {
         public string SiteUrl { get; set; }
         public string TableClassID { get; set; }
+        public string ColumnToCompare { get; set; }
         public string CompareValue { get; set; }
+        public string NotNullColumn { get; set; }
     }
 }

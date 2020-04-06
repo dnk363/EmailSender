@@ -8,14 +8,16 @@ namespace EmailSender.Services
     class ShedulerService
     {
         private IEmailService _emailService;
+        private IFormMessageService _formMessageService;
         private IEmailSettings _emailSettings;
         private ISiteSettings _siteSettings;
         private IMessage _message;
         private IScheduler _scheduler;
 
-        public ShedulerService(IEmailService emailService, IEmailSettings emailSettings, IMessage message, ISiteSettings siteSettings)
+        public ShedulerService(IEmailService emailService, IFormMessageService formMessageService, IEmailSettings emailSettings, IMessage message, ISiteSettings siteSettings)
         {
             _emailService = emailService;
+            _formMessageService = formMessageService;
             _emailSettings = emailSettings;
             _siteSettings = siteSettings;
             _message = message;
@@ -34,6 +36,7 @@ namespace EmailSender.Services
             IJobDetail job = JobBuilder.Create<JobSender>().Build();
 
             job.JobDataMap["emailService"] = _emailService;
+            job.JobDataMap["formMessageService"] = _formMessageService;
             job.JobDataMap["emailSettings"] = _emailSettings;
             job.JobDataMap["siteSettings"] = _siteSettings;
             job.JobDataMap["message"] = _message;
@@ -52,6 +55,8 @@ namespace EmailSender.Services
 
         private class JobSender : IJob
         {
+            private IEmailService _emailService;
+            private IFormMessageService _formMessageService;
             private IEmailSettings _emailSettings;
             private IMessage _message;
             private ISiteSettings _siteSettings;
@@ -59,11 +64,12 @@ namespace EmailSender.Services
             public async Task Execute(IJobExecutionContext context)
             {
                 JobDataMap dataMap = context.JobDetail.JobDataMap;
-                EmailService emailService = (EmailService)dataMap["emailService"];
+                _emailService = (IEmailService)dataMap["emailService"];
+                _formMessageService = (IFormMessageService)dataMap["formMessageService"];
                 _emailSettings = (IEmailSettings)dataMap["emailSettings"];
                 _message = (IMessage)dataMap["message"];
                 _siteSettings = (ISiteSettings)dataMap["siteSettings"];
-                await emailService.SendEmailAsync(_emailSettings, _message, _siteSettings);
+                await _emailService.SendEmailAsync(_formMessageService, _emailSettings, _message, _siteSettings);
             }
         }
     }

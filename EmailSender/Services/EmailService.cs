@@ -8,10 +8,9 @@ namespace EmailSender.Services
 {
     public class EmailService : IEmailService
     {
-        public async Task SendEmailAsync(IEmailSettings emailSettings, IMessage message, ISiteSettings siteSettings)
+        public async Task SendEmailAsync(IFormMessageService formMessageService, IEmailSettings emailSettings, IMessage message, ISiteSettings siteSettings)
         {
             var emailMessage = new MimeMessage();
-            FormMessageService formMessageService = new FormMessageService();
 
             emailMessage.From.Add(new MailboxAddress(message.SenderName, message.SenderEmail));
             emailMessage.To.Add(new MailboxAddress("", message.RecieverEmail));

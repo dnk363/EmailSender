@@ -66,6 +66,7 @@ namespace EmailSender
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
             EmailService emailService = new EmailService();
+            FormMessageService formMessageService = new FormMessageService();
 
             foreach (var settingsList in _dataSettingsList)
             {
@@ -93,11 +94,12 @@ namespace EmailSender
                 {
                     SiteUrl = settingsList.SiteUrl,
                     TableClassID = settingsList.TableClassID,
+                    ColumnToCompare = settingsList.ColumnToCompare,
                     CompareValue = settingsList.CompareValue,
-                    
+                    NotNullColumn= settingsList.NotNullColumn
                 };
 
-                ShedulerService shedulerService = new ShedulerService(emailService, emailSettings, message, siteSettings);
+                ShedulerService shedulerService = new ShedulerService(emailService, formMessageService, emailSettings, message, siteSettings);
 
                 shedulerService.StartNowAsync();
 

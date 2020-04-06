@@ -5,16 +5,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EmailSender.Services
 {
-    public class FormMessageService
+    public class FormMessageService : IFormMessageService
     {
         private string _message;
-        private List<string> _row = new List<string>();
         private List<string> _head = new List<string>();
-        private List<List<string>> _table = new List<List<string>>();
-        
+        private Dictionary<string, string> _row = new Dictionary<string, string>();
+        private List<Dictionary<string, string>> _table = new List<Dictionary<string, string>>();
+
         public string GetMessage(ISiteSettings siteSettings)
         {
             HtmlDocument page = new HtmlDocument();
@@ -28,22 +29,21 @@ namespace EmailSender.Services
             foreach (var th in head)
             {
                 _head.Add(th.InnerText);
-
             }
 
             foreach (var tr in rows)
             {
-                _row = new List<string>();
+                _row = new Dictionary<string, string>();
                 cells = tr.ChildNodes;
-                foreach (var td in cells)
+                for (int i = 0; i < cells.Count; i++)
                 {
-                    _row.Add(td.InnerText);
+                    _row.Add(_head[i], cells[i].InnerText);
                 }
 
                 _table.Add(_row);
             }
 
-            _message = "<!DOCTYPE html><html><head></head><body>" + GetMyTable(_head, _table, siteSettings.CompareValue) + "</body></html>";
+            _message = "<!DOCTYPE html><html><head></head><body>" + GetMyTable(_head, _table, siteSettings) + "</body></html>";
 
             _head.Clear();
             _table.Clear();
@@ -52,14 +52,42 @@ namespace EmailSender.Services
             return _message;
         }
 
+        private string GetMyTable(List<string> head, List<Dictionary<string, string>> itemList, ISiteSettings siteSettings)
+        {
+            StringBuilder table = new StringBuilder();
+            table.Append("<TABLE>");
+            foreach (var th in head)
+            {
+                table.Append("<TH>" + th + "</TH>");
+            }
+            foreach (var row in itemList)
+            {
+                if (row.GetValueOrDefault(siteSettings.ColumnToCompare) == siteSettings.CompareValue
+                    && row.GetValueOrDefault(siteSettings.NotNullColumn) != "")
+                {
+                    table.Append("<TR>");
+                    foreach (var cell in row)
+                    {
+                        table.Append("<TD>");
+                        table.Append(cell.Value);
+                        table.Append("</TD>");
+                    }
+                    table.Append("</TR>");
+                }
+            }
+            table.Append("</TABLE>");
+
+            return table.ToString();
+        }
+
         private string GetRequest(string url)
         {
+            var content = new MemoryStream();
             try
             {
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
                 httpWebRequest.AllowAutoRedirect = false;
                 httpWebRequest.Method = "GET";
-                httpWebRequest.Referer = "http://google.com";
                 using (var httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse())
                 {
                     using (var stream = httpWebResponse.GetResponseStream())
@@ -75,33 +103,6 @@ namespace EmailSender.Services
             {
                 return String.Empty;
             }
-        }
-
-        private static string GetMyTable(List<string> head, List<List<string>> itemList, string valueToCompare)
-        {
-            StringBuilder table = new StringBuilder();
-            table.Append("<TABLE>");
-            foreach (var th in head)
-            {
-                table.Append("<TH>" + th + "</TH>");
-            }
-            foreach (var row in itemList)
-            {
-                if (row.Exists(x => x == valueToCompare))
-                {
-                    table.Append("<TR>");
-                    foreach (var cell in row)
-                    {
-                        table.Append("<TD>");
-                        table.Append(cell);
-                        table.Append("</TD>");
-                    }
-                    table.Append("</TR>");
-                }
-            }
-            table.Append("</TABLE>");
-
-            return table.ToString();
         }
     }
 }
