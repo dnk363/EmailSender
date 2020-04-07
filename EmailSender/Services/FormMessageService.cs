@@ -82,7 +82,6 @@ namespace EmailSender.Services
 
         private string GetRequest(string url)
         {
-            var content = new MemoryStream();
             try
             {
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
