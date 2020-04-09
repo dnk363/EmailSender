@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace EmailSender.ViewModels
 {
-    class ViewSettings : IEmailSettings, IMessage, ISiteSettings, INotifyPropertyChanged
+    public class ViewSettings : IEmailSettings, IMessage, ISiteSettings, INotifyPropertyChanged
     {
         private string _name;
         private bool _enableSSL;

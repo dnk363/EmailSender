@@ -20,6 +20,8 @@ namespace EmailSender.Services
         {
             HtmlDocument page = new HtmlDocument();
             page.LoadHtml(GetRequest(siteSettings.SiteUrl));
+            if (page.Text == "")
+                return String.Empty;
             HtmlNode table = page.DocumentNode.SelectSingleNode("//table[@class='" + siteSettings.TableClassID + "']");
 
             HtmlNodeCollection rows = table.SelectNodes("//tr");

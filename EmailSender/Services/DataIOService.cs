@@ -1,14 +1,11 @@
 ﻿using EmailSender.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 
 namespace EmailSender.Services
 {
-    class DataIOService
+    public class DataIOService
     {
         private readonly string PATH;
 
