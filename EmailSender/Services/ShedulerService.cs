@@ -23,7 +23,7 @@ namespace EmailSender.Services
             _message = message;
         }
 
-        public async void StartNowAsync()
+        public async void StartNowSync()
         {
             await Start();
         }

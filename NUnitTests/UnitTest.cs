@@ -4,6 +4,9 @@ using EmailSender.ViewModels;
 using NUnit.Framework;
 using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Collections;
+using System.Globalization;
 
 namespace NUnitTests
 {
@@ -84,7 +87,12 @@ namespace NUnitTests
 
             BindingList<ViewSettings> bindingListLoad = dataIOService.LoadData();
 
-            Assert.IsTrue(bindingListLoad.Equals(bindingListLoad));
+            Comparer comparer = new Comparer(CultureInfo.CurrentCulture);
+
+            var viewSettingsLoad = bindingListLoad.FirstOrDefault();
+            var viewSettingsSave = bindingListSave.FirstOrDefault();
+
+            Assert.AreEqual(comparer.Compare(viewSettingsLoad, viewSettingsSave), 0);
         }
     }
 }

@@ -101,7 +101,7 @@ namespace EmailSender
 
                 ShedulerService shedulerService = new ShedulerService(emailService, formMessageService, emailSettings, message, siteSettings);
 
-                shedulerService.StartNowAsync();
+                shedulerService.StartNowSync();
 
                 _shedulerServices.Add(shedulerService);
             }

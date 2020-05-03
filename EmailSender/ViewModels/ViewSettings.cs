@@ -1,9 +1,10 @@
 ﻿using EmailSender.Interfaces;
+using System;
 using System.ComponentModel;
 
 namespace EmailSender.ViewModels
 {
-    public class ViewSettings : IEmailSettings, IMessage, ISiteSettings, INotifyPropertyChanged
+    public class ViewSettings : IEmailSettings, IMessage, ISiteSettings, INotifyPropertyChanged, IComparable
     {
         private string _name;
         private bool _enableSSL;
@@ -218,6 +219,30 @@ namespace EmailSender.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public int CompareTo(object obj)
+        {
+            ViewSettings otherViewSettings = obj as ViewSettings;
+            if(Name.CompareTo(otherViewSettings.Name) == 0 &&
+               EnableSSL.CompareTo(otherViewSettings.EnableSSL) == 0 &&
+               Host.CompareTo(otherViewSettings.Host) == 0 &&
+               Port.CompareTo(otherViewSettings.Port) == 0 &&
+               UserEmail.CompareTo(otherViewSettings.UserEmail) == 0 &&
+               UserPassword.CompareTo(otherViewSettings.UserPassword) == 0 &&
+               SenderName.CompareTo(otherViewSettings.SenderName) == 0 &&
+               SenderEmail.CompareTo(otherViewSettings.SenderEmail) == 0 &&
+               RecieverEmail.CompareTo(otherViewSettings.RecieverEmail) == 0 &&
+               MessageSubject.CompareTo(otherViewSettings.MessageSubject) == 0 &&
+               MessageBody.CompareTo(otherViewSettings.MessageBody) == 0 &&
+               SiteUrl.CompareTo(otherViewSettings.SiteUrl) == 0 &&
+               TableClassID.CompareTo(otherViewSettings.TableClassID) == 0 &&
+               CompareValue.CompareTo(otherViewSettings.CompareValue) == 0 &&
+               TimeStartSettings.CompareTo(otherViewSettings.TimeStartSettings) == 0 &&
+               NotNullColumn.CompareTo(otherViewSettings.NotNullColumn) == 0 &&
+               ColumnToCompare.CompareTo(otherViewSettings.ColumnToCompare) == 0)
+                return 0;
+            return 1;
+        }
 
         protected virtual void OnPropertyChanged(string propertyName = "")
         {
