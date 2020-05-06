@@ -102,6 +102,7 @@ namespace EmailSender.Services
             }
             catch
             {
+                Logger.Debug($"Cannot open url:{url}");
                 return String.Empty;
             }
         }

@@ -1,5 +1,6 @@
 ﻿using EmailSender.ViewModels;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 
@@ -16,8 +17,9 @@ namespace EmailSender.Services
 
         public BindingList<ViewSettings> LoadData()
         {
-            if(!File.Exists(PATH))
+            if (!File.Exists(PATH))
             {
+                Logger.Debug($"File not found - {PATH}");
                 File.CreateText(PATH);
                 return new BindingList<ViewSettings>();
             }

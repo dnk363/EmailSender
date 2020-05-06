@@ -19,12 +19,13 @@ namespace EmailSender
         public MainWindow()
         {
             InitializeComponent();
+            Logger.Info("Programm is running");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             stopButton.IsEnabled = false;
-
+            
             _dataIOService = new DataIOService(PATH);
 
             try
@@ -40,12 +41,12 @@ namespace EmailSender
             
             gridEmailSender.ItemsSource = _dataSettingsList;
             itemEmailSender.DataContext = _dataSettingsList;
-            _dataSettingsList.ListChanged += _dataSettingsList_ListChanged;
+            _dataSettingsList.ListChanged += DataSettingsList_ListChanged;
 
             FormMessageService formMessageService = new FormMessageService();
         }
 
-        private void _dataSettingsList_ListChanged(object sender, ListChangedEventArgs e)
+        private void DataSettingsList_ListChanged(object sender, ListChangedEventArgs e)
         {
             if ( e.ListChangedType == ListChangedType.ItemAdded
               || e.ListChangedType == ListChangedType.ItemDeleted
@@ -57,7 +58,7 @@ namespace EmailSender
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    Logger.Error($"Cannot save settings. Message:{ex.Message}");
                     Close();
                 }
             }
@@ -108,6 +109,7 @@ namespace EmailSender
 
             startButton.IsEnabled = false;
             stopButton.IsEnabled = true;
+            Logger.Info($"Scheduled [{_dataSettingsList.Count}] tasks launched");
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
@@ -118,6 +120,7 @@ namespace EmailSender
             }
             stopButton.IsEnabled = false;
             startButton.IsEnabled = true;
+            Logger.Info($"Scheduled [{_dataSettingsList.Count}] tasks stoped");
         }
 
         private void gridEmailSender_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
