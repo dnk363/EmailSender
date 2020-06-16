@@ -64,7 +64,7 @@ namespace EmailSender
             }
         }
 
-        private void StartButton_Click(object sender, RoutedEventArgs e)
+        private async void StartButton_Click(object sender, RoutedEventArgs e)
         {
             EmailService emailService = new EmailService();
             FormMessageService formMessageService = new FormMessageService();
@@ -102,7 +102,7 @@ namespace EmailSender
 
                 ShedulerService shedulerService = new ShedulerService(emailService, formMessageService, emailSettings, message, siteSettings);
 
-                shedulerService.StartNowSync();
+                await shedulerService.Start();
 
                 _shedulerServices.Add(shedulerService);
             }

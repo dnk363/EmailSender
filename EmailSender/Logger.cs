@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using Serilog;
+﻿using Serilog;
 
 namespace EmailSender.Services
 {

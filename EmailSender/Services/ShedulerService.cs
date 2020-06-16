@@ -23,11 +23,6 @@ namespace EmailSender.Services
             _message = message;
         }
 
-        public async void StartNowSync()
-        {
-            await Start();
-        }
-
         public async Task Start()
         {
             _scheduler = await StdSchedulerFactory.GetDefaultScheduler();
